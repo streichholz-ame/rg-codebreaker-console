@@ -44,7 +44,7 @@ class InputHelper
   rescue Codebraker::Errors::InvalidGuessError
     output_helper.wrong_guess_input
     output_helper.guess_input
-  retry
+    retry
   end
 
   def approve_command
@@ -56,6 +56,8 @@ class InputHelper
     output_helper.save_result(Constants::APPROVAL_COMMANDS.join('/'))
     retry
   end
+
+  private
 
   def check_input(input, input_type, command)
     case input

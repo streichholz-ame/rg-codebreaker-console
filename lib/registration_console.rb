@@ -11,6 +11,8 @@ class RegistrationConsole < CodebrakerConsole
     GameConsole.new(player_name, difficulty).run
   end
 
+  private
+
   def check_input(input)
     input[:type] == :command ? public_send(:"#{input[:value]}_command") : input[:value]
   end

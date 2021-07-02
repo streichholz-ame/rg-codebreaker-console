@@ -19,3 +19,7 @@ gem 'fasterer', '~> 0.9.0'
 gem 'simplecov'
 
 gem 'lefthook', '~> 0.7.6'
+
+gem 'rubocop-performance', '~> 1.11'
+
+gem 'rubocop-rspec', '~> 2.2'

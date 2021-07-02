@@ -12,7 +12,7 @@ class GameConsole < CodebrakerConsole
     input = input_helper.guess
     case input[:type]
     when :command then public_send("#{input[:value]}_command")
-    when :input 
+    when :input
       guess = game.check_guess(input[:value])
       show_result(guess)
     end
@@ -20,10 +20,10 @@ class GameConsole < CodebrakerConsole
 
   def hint_command
     hint = game.give_hint
-    rescue Codebraker::Errors::HintError
-      output_helper.no_hint
-    else
-      output_helper.hint(hint)
+  rescue Codebraker::Errors::HintError
+    output_helper.no_hint
+  else
+    output_helper.hint(hint)
     run
   end
 
@@ -31,7 +31,7 @@ class GameConsole < CodebrakerConsole
     result = guess[:answer]
     output_helper.guess_result(result)
     case guess[:status]
-    when :win 
+    when :win
       win(guess[:code])
       save_result
     when :lost then lost(guess[:code])

@@ -75,8 +75,9 @@ RSpec.describe OutputHelper do
     end
   end
 
-  describe "#hint" do
+  describe '#hint' do
     let(:hint) { rand(1..6) }
+
     it 'show hint' do
       expect { output_helper.hint(hint) }.to output { I18n.t(:hint_message) }.to_stdout
     end
@@ -102,6 +103,7 @@ RSpec.describe OutputHelper do
 
   describe '#answer' do
     let(:secret_code) { '1234' }
+
     it 'show message' do
       expect { output_helper.answer(secret_code) }.to output { I18n.t(:answer) }.to_stdout
     end
@@ -116,17 +118,17 @@ RSpec.describe OutputHelper do
   end
 
   describe '#rating' do
-      let(:rating_message) { "Rating message\n" }
-      let(:rating_header) { "Rating header\n" }
-      let(:rating_record) { "Rating record\n" }
-      let(:rating) { rating_message + rating_header + rating_record }
-      let(:rating_records) { [{ key: 'value' }] }
+    let(:rating_message) { "Rating message\n" }
+    let(:rating_header) { "Rating header\n" }
+    let(:rating_record) { "Rating record\n" }
+    let(:rating) { rating_message + rating_header + rating_record }
+    let(:rating_records) { [{ key: 'value' }] }
 
-      it 'shows message from config :rating_message, :rating_data_header, :rating_data_input' do
-        allow(I18n).to receive(:t).with(:rating_message).and_return(rating_message.chomp)
-        allow(I18n).to receive(:t).with(:rating_data_header).and_return(rating_header.chomp)
-        allow(I18n).to receive(:t).with(:rating_data_input, **rating_records[0]).and_return(rating_record.chomp)
-        expect { output_helper.rating(rating_records) }.to output(rating).to_stdout
-      end
+    it 'shows message from config :rating_message, :rating_data_header, :rating_data_input' do
+      allow(I18n).to receive(:t).with(:rating_message).and_return(rating_message.chomp)
+      allow(I18n).to receive(:t).with(:rating_data_header).and_return(rating_header.chomp)
+      allow(I18n).to receive(:t).with(:rating_data_input, **rating_records[0]).and_return(rating_record.chomp)
+      expect { output_helper.rating(rating_records) }.to output(rating).to_stdout
     end
+  end
 end

@@ -24,8 +24,8 @@ class OutputHelper
   end
 
   def greeting(player_name)
-    puts I18n.t(:greeting_message, player_name: player_name)  
-  end 
+    puts I18n.t(:greeting_message, player_name: player_name)
+  end
 
   def choose_difficulty
     puts I18n.t(:choose_difficulty_message)
@@ -34,7 +34,7 @@ class OutputHelper
   def wrong_difficulty
     puts I18n.t(:wrong_difficulty_message)
   end
-    
+
   def difficulty(difficulty)
     puts I18n.t(:"difficulties.#{difficulty}")
   end
@@ -52,11 +52,11 @@ class OutputHelper
   end
 
   def hint(hint)
-      puts I18n.t(:hint_message, hint: hint)
+    puts I18n.t(:hint_message, hint: hint)
   end
 
   def no_hint
-      puts I18n.t(:no_hint_message)
+    puts I18n.t(:no_hint_message)
   end
 
   def wrong_command

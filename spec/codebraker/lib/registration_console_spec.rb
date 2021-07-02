@@ -14,7 +14,7 @@ RSpec.describe RegistrationConsole do
       allow(registration_console.input_helper).to receive(:difficulty).and_return(difficulty_input)
       allow(GameConsole).to receive(:new).with(player_name, difficulty).and_return(game)
       expect(game).to receive(:run)
-      registration_console.run      
+      registration_console.run
     end
 
     it 'call exit when input exit' do

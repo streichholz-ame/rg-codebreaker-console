@@ -8,6 +8,7 @@ RSpec.describe GameConsole do
   describe '#run' do
     let(:guess) { '1111' }
     let(:hint_command) { 'hint' }
+
     it 'command input' do
       allow(game_console.input_helper).to receive(:guess).and_return({ type: :command, value: hint_command })
       expect(game_console).to receive(:hint_command)
@@ -23,6 +24,7 @@ RSpec.describe GameConsole do
 
   describe '#hint_command' do
     let(:hint) { rand(1..6) }
+
     it 'give hint if hint validated' do
       allow(game_console.game).to receive(:give_hint).and_return(hint)
       allow(game_console.output_helper).to receive(:hint).with(hint)
@@ -44,7 +46,6 @@ RSpec.describe GameConsole do
     let(:rating_instance) { instance_double(RatingConsole) }
 
     context 'when user win' do
-
       it 'save result if answer yes' do
         allow(game_console.input_helper).to receive(:approve_command).and_return('yes')
         expect(RatingConsole).to receive(:add_data)
@@ -53,12 +54,11 @@ RSpec.describe GameConsole do
 
       it 'not save result' do
         allow(game_console.input_helper).to receive(:approve_command).and_return('no')
-        expect(RatingConsole).to_not receive(:add_data)
+        expect(RatingConsole).not_to receive(:add_data)
         game_console.show_result(win_result)
       end
     end
-    
-    
+
     it 'lost' do
       allow(game_console.output_helper).to receive(:guess_result).with(lose_result[:answer])
       allow(game_console.output_helper).to receive(:lose_message)
@@ -72,7 +72,5 @@ RSpec.describe GameConsole do
       expect(game_console).to receive(:run)
       game_console.show_result(result)
     end
-
   end
-
 end

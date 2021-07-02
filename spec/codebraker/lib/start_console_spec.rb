@@ -57,4 +57,36 @@ RSpec.describe StartConsole do
       start_console.game_menu
     end
   end
+
+  describe '#rating' do
+    let(:records) do
+      [
+        {
+          rating: 1,
+          name: 'Ame',
+          difficulty: :easy,
+          attempts_max: 15,
+          attempts: 1,
+          hints_max: 2,
+          hints: 0
+        },
+        {
+          rating: 2,
+          name: 'Liza',
+          difficulty: :easy,
+          attempts_max: 15,
+          attempts: 2,
+          hints_max: 2,
+          hints: 0
+        }
+      ]
+    end
+
+    it 'shows rating' do
+      allow(RatingConsole).to receive(:recorded_data).and_return(records)
+      allow(start_console.output_helper).to receive(:rating).with(records)
+      expect(start_console).to receive(:game_menu)
+      start_console.rating_command
+    end
+  end
 end

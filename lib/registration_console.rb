@@ -1,24 +1,24 @@
 class RegistrationConsole < CodebrakerConsole
   def run
-    player_name = get_name
-    difficulty = get_difficulty
-    GameConsole.new(player_name, difficulty).run
+    name = player_name
+    difficulty = player_difficulty
+    GameConsole.new(name, difficulty).run
   end
 
   private
 
-  def get_name
+  def player_name
     output_helper.player_name
     player_name = check_input(input_helper.player_name)
     output_helper.greeting(player_name)
-    return player_name
+    player_name
   end
 
-  def get_difficulty
+  def player_difficulty
     output_helper.choose_difficulty
     difficulty = check_input(input_helper.difficulty)
     output_helper.difficulty(difficulty)
-    return difficulty
+    difficulty
   end
 
   def check_input(input)

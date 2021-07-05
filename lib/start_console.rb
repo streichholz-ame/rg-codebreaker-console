@@ -17,7 +17,6 @@ class StartConsole < CodebrakerConsole
     game_menu
   end
 
-
   def rules_command
     output_helper.rules
     game_menu

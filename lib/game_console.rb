@@ -22,9 +22,9 @@ class GameConsole < CodebrakerConsole
     output_helper.guess_result(result)
     check_status(guess)
   end
-  
+
   private
-  
+
   def hint_command
     hint = game.give_hint
   rescue Codebraker::Errors::HintError

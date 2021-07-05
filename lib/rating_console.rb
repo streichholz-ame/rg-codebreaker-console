@@ -2,7 +2,6 @@ class RatingConsole
   extend DataLoader
 
   class << self
-
     def add_data(result)
       save_data(result)
     end

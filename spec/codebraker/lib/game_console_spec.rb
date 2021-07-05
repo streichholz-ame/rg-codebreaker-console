@@ -3,7 +3,7 @@ RSpec.describe GameConsole do
 
   let(:player_name) { 'a' * Codebraker::Validation::MIN_NAME_LENGTH }
   let(:difficulty) { Codebraker::Constants::DIFFICULTIES.keys.sample.to_s }
-  let(:secret_code) { game_console.game.secret_code.join('') }
+  let(:secret_code) { game_console.game.secret_code.join }
 
   describe '#run' do
     let(:guess) { '1111' }
@@ -55,6 +55,7 @@ RSpec.describe GameConsole do
       end
 
       after { game_console.show_result(win_result) }
+
       it 'save result if answer yes' do
         allow(game_console.input_helper).to receive(:approve_command).and_return('yes')
         expect(RatingConsole).to receive(:add_data)

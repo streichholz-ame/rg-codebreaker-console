@@ -11,7 +11,6 @@ class GameConsole < CodebrakerConsole
   def run
     output_helper.guess_input
     input = input_helper.guess
-    binding.pry
     case input[:type]
     when :command then send("#{input[:value]}_command")
     when :input
@@ -32,14 +31,12 @@ class GameConsole < CodebrakerConsole
   end
 
   def show_result(guess)
-    binding.pry
     result = guess[:answer]
     output_helper.guess_result(result)
     check_status(guess)
   end
 
   def check_status(guess)
-    binding.pry
     case guess[:status]
     when :win
       win(guess)

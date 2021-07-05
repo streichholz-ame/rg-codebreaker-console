@@ -14,10 +14,11 @@ RSpec.describe StartConsole do
 
     it 'call registration console when start' do
       allow(RegistrationConsole).to receive(:new).and_return(registration_console_double)
-      allow(start_console).to receive(:run)
+      allow(start_console).to receive(:game_menu)
       allow(start_console.input_helper).to receive(:scenario_command).and_return('start')
-      allow(start_console).to receive(:start_command)
-      expect(registration_console_double).to receive(:run)
+      allow(start_console).to receive(:send).with('start_command')
+      expect(start_console).to receive(:game_menu)
+      start_console.run
     end
   end
 

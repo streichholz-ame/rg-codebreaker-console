@@ -19,7 +19,7 @@ RSpec.describe RegistrationConsole do
 
     it 'call exit when input exit' do
       allow(registration_console.input_helper).to receive(:player_name).and_return(exit_input)
-      allow(registration_console).to receive(:public_send).with(:exit_command).and_throw(:exit)
+      allow(registration_console).to receive(:send).with(:exit_command).and_throw(:exit)
       expect { registration_console.run }.to throw_symbol :exit
     end
 
@@ -28,7 +28,7 @@ RSpec.describe RegistrationConsole do
       allow(registration_console.input_helper).to receive(:player_name).and_return(player_input)
       allow(registration_console.output_helper).to receive(:difficulty)
       allow(registration_console.input_helper).to receive(:difficulty).and_return(exit_input)
-      allow(registration_console).to receive(:public_send).with(:exit_command).and_throw(:exit)
+      allow(registration_console).to receive(:send).with(:exit_command).and_throw(:exit)
       expect { registration_console.run }.to throw_symbol :exit
     end
   end

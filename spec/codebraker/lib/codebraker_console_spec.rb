@@ -3,8 +3,9 @@ RSpec.describe CodebrakerConsole do
     let(:console) { described_class.new }
 
     it 'exit app' do
-      allow(console.output_helper).to receive(:gets).and_return('exit')
+      allow(console.input_helper).to receive(:gets).and_return('exit')
       expect(console).to receive(:exit)
+      console.exit_command
     end
   end
 end

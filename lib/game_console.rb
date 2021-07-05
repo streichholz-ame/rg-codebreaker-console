@@ -1,5 +1,3 @@
-require 'pry'
-
 class GameConsole < CodebrakerConsole
   attr_accessor :game
 
@@ -18,6 +16,12 @@ class GameConsole < CodebrakerConsole
       show_result(guess)
     end
   end
+
+  def show_result(guess)
+    result = guess[:answer]
+    output_helper.guess_result(result)
+    check_status(guess)
+  end
   
   private
   
@@ -28,12 +32,6 @@ class GameConsole < CodebrakerConsole
   else
     output_helper.hint(hint)
     run
-  end
-
-  def show_result(guess)
-    result = guess[:answer]
-    output_helper.guess_result(result)
-    check_status(guess)
   end
 
   def check_status(guess)

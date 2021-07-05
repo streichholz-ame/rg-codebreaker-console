@@ -22,6 +22,6 @@ class RegistrationConsole < CodebrakerConsole
   end
 
   def check_input(input)
-    input[:type] == :command ? public_send(:"#{input[:value]}_command") : input[:value]
+    input[:type] == :command ? send(:"#{input[:value]}_command") : input[:value]
   end
 end

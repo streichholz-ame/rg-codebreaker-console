@@ -3,7 +3,7 @@ RSpec.describe GameConsole do
 
   let(:player_name) { 'a' * Codebraker::Validation::MIN_NAME_LENGTH }
   let(:difficulty) { Codebraker::Constants::DIFFICULTIES.keys.sample.to_s }
-  let(:secret_code) { '1234' }
+  let(:secret_code) { game_console.game.secret_code.join('') }
 
   describe '#run' do
     let(:guess) { '1111' }
@@ -48,17 +48,16 @@ RSpec.describe GameConsole do
     let(:win_result) { { answer: '++++', status: :win, code: secret_code } }
     let(:lose_result) { { answer: '-', status: :lost, code: secret_code } }
     let(:result) { { answer: '-', status: :next } }
-    let(:rating_instance) { instance_double(RatingConsole) }
 
     context 'when user win' do
       before do
-        allow(game_console).to receive(:run)
-        allow(game_console.input_helper).to receive(:guess).with(win_result[:code])
+        allow(game_console.input_helper).to receive(:guess).with(secret_code)
       end
+
+      after { game_console.show_result(win_result) }
       it 'save result if answer yes' do
         allow(game_console.input_helper).to receive(:approve_command).and_return('yes')
         expect(RatingConsole).to receive(:add_data)
-        game_console.run
       end
 
       it 'not save result' do
@@ -78,10 +77,8 @@ RSpec.describe GameConsole do
 
     context 'when game is not over' do
       it 'continue game' do
-        allow(game_console.input_helper).to receive(:guess).and_return( { type: :input, value: '1111' } )
-        # allow(game_console.output_helper).to receive(:guess_result).with(result[:answer])
-        # allow(game_console.input_helper).to receive(:guess).and_return(:input)
         expect(game_console).to receive(:run)
+        game_console.show_result(result)
       end
     end
   end

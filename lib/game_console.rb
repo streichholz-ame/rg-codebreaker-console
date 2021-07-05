@@ -1,23 +1,27 @@
+require 'pry'
+
 class GameConsole < CodebrakerConsole
   attr_accessor :game
 
   def initialize(player_name, difficulty)
     @game = Codebraker::Game.new(player_name, difficulty.to_sym)
-    @start_console = StartConsole.new
     super()
   end
 
   def run
     output_helper.guess_input
     input = input_helper.guess
+    binding.pry
     case input[:type]
-    when :command then public_send("#{input[:value]}_command")
+    when :command then send("#{input[:value]}_command")
     when :input
       guess = game.check_guess(input[:value])
       show_result(guess)
     end
   end
-
+  
+  private
+  
   def hint_command
     hint = game.give_hint
   rescue Codebraker::Errors::HintError
@@ -28,26 +32,34 @@ class GameConsole < CodebrakerConsole
   end
 
   def show_result(guess)
+    binding.pry
     result = guess[:answer]
     output_helper.guess_result(result)
+    check_status(guess)
+  end
+
+  def check_status(guess)
+    binding.pry
     case guess[:status]
     when :win
-      win(guess[:code])
+      win(guess)
       save_result
-    when :lost then lost(guess[:code])
+    when :lost then lost(guess)
     else run
     end
   end
 
-  private
-
-  def win(code)
+  def win(guess)
     output_helper.win
-    output_helper.answer(code)
+    give_answer(guess[:code])
   end
 
-  def lost(code)
+  def lost(guess)
     output_helper.lost
+    give_answer(guess[:code])
+  end
+
+  def give_answer(code)
     output_helper.answer(code)
   end
 

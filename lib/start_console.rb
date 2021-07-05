@@ -4,10 +4,12 @@ class StartConsole < CodebrakerConsole
     game_menu
   end
 
+  # private
+
   def game_menu
     output_helper.scenario(Constants::SCENARIO_COMMANDS.join(', '))
     scenario = input_helper.scenario_command
-    public_send("#{scenario}_command".to_sym)
+    public_send("#{scenario}_command")
   end
 
   def start_command

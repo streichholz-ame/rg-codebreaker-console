@@ -5,7 +5,6 @@ RSpec.describe CodebrakerConsole do
     it 'exit app' do
       allow(console.output_helper).to receive(:gets).and_return('exit')
       expect(console).to receive(:exit)
-      console.exit_command
     end
   end
 end

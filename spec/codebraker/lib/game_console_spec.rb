@@ -23,19 +23,24 @@ RSpec.describe GameConsole do
   end
 
   describe '#hint_command' do
+    let(:hint_command) { 'hint' }
     let(:hint) { rand(1..6) }
+
+    before do
+      allow(game_console.input_helper).to receive(:guess).and_return({ type: :command, value: hint_command })
+    end
 
     it 'give hint if hint validated' do
       allow(game_console.game).to receive(:give_hint).and_return(hint)
       allow(game_console.output_helper).to receive(:hint).with(hint)
       expect(game_console).to receive(:run)
-      game_console.hint_command
+      game_console.run
     end
 
     it 'give no hint message if hint empty' do
       game_console.game.instance_variable_set(:@hints, [])
       expect(game_console.output_helper).to receive(:no_hint)
-      game_console.hint_command
+      game_console.run
     end
   end
 
@@ -46,31 +51,38 @@ RSpec.describe GameConsole do
     let(:rating_instance) { instance_double(RatingConsole) }
 
     context 'when user win' do
+      before do
+        allow(game_console).to receive(:run)
+        allow(game_console.input_helper).to receive(:guess).with(win_result[:code])
+      end
       it 'save result if answer yes' do
         allow(game_console.input_helper).to receive(:approve_command).and_return('yes')
         expect(RatingConsole).to receive(:add_data)
-        game_console.show_result(win_result)
+        game_console.run
       end
 
       it 'not save result' do
         allow(game_console.input_helper).to receive(:approve_command).and_return('no')
         expect(RatingConsole).not_to receive(:add_data)
-        game_console.show_result(win_result)
       end
     end
 
-    it 'lost' do
-      allow(game_console.output_helper).to receive(:guess_result).with(lose_result[:answer])
-      allow(game_console.output_helper).to receive(:lose_message)
-      allow(game_console.output_helper).to receive(:result).with(lose_result[:code])
-      expect(game_console).not_to receive(:run)
-      game_console.show_result(lose_result)
+    context 'when user lost' do
+      it 'lost' do
+        allow(game_console.output_helper).to receive(:guess_result).with(lose_result[:answer])
+        allow(game_console.output_helper).to receive(:lose_message)
+        allow(game_console.output_helper).to receive(:result).with(lose_result[:code])
+        expect(game_console).not_to receive(:run)
+      end
     end
 
-    it 'continue game' do
-      allow(game_console.output_helper).to receive(:guess_result).with(result[:answer])
-      expect(game_console).to receive(:run)
-      game_console.show_result(result)
+    context 'when game is not over' do
+      it 'continue game' do
+        allow(game_console.input_helper).to receive(:guess).and_return( { type: :input, value: '1111' } )
+        # allow(game_console.output_helper).to receive(:guess_result).with(result[:answer])
+        # allow(game_console.input_helper).to receive(:guess).and_return(:input)
+        expect(game_console).to receive(:run)
+      end
     end
   end
 end

@@ -1,5 +1,5 @@
 RSpec.describe InputHelper do
-  let(:input_helper) { described_class.new }
+  let(:input_helper) { described_class.new(OutputHelper.new) }
 
   describe '#player_name' do
     let(:valid_name) { 'a' * Codebraker::Validation::MIN_NAME_LENGTH }

@@ -3,7 +3,7 @@ class CodebrakerConsole
 
   def initialize
     @output_helper = OutputHelper.new
-    @input_helper = InputHelper.new
+    @input_helper = InputHelper.new(@output_helper)
   end
 
   def exit_command

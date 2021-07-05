@@ -1,13 +1,11 @@
-require 'pry'
-
 class InputHelper
   include Validation
   include Codebraker::Validation
 
   attr_reader :output_helper
 
-  def initialize
-    @output_helper = OutputHelper.new
+  def initialize(output_helper)
+    @output_helper = output_helper
   end
 
   def player_name

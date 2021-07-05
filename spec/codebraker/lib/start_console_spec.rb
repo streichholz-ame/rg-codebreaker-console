@@ -14,17 +14,19 @@ RSpec.describe StartConsole do
 
     it 'call registration console when start' do
       allow(RegistrationConsole).to receive(:new).and_return(registration_console_double)
-      allow(registration_console_double).to receive(:run)
-      expect(start_console).to receive(:game_menu)
-      start_console.start_command
+      allow(start_console).to receive(:run)
+      allow(start_console.input_helper).to receive(:scenario_command).and_return('start')
+      allow(start_console).to receive(:start_command)
+      expect(registration_console_double).to receive(:run)
     end
   end
 
   describe '#rules' do
     it 'output rules' do
       allow(start_console.output_helper).to receive(:rules).and_return(I18n.t(:rules_message))
+      allow(start_console).to receive(:game_menu).with('rules')
       expect(start_console).to receive(:game_menu)
-      start_console.rules_command
+      start_console.run
     end
   end
 
@@ -32,29 +34,29 @@ RSpec.describe StartConsole do
     it 'call start_command when start' do
       allow(start_console.output_helper).to receive(:scenario).and_return(I18n.t(:select_scenario_message))
       allow(start_console.input_helper).to receive(:scenario_command).and_return('start')
-      expect(start_console).to receive(:public_send).with(:start_command)
-      start_console.game_menu
+      expect(start_console).to receive(:start_command)
+      start_console.run
     end
 
     it 'call rules_command when rules' do
       allow(start_console.output_helper).to receive(:scenario).and_return(I18n.t(:select_scenario_message))
       allow(start_console.input_helper).to receive(:scenario_command).and_return('rules')
-      expect(start_console).to receive(:public_send).with(:rules_command)
-      start_console.game_menu
+      expect(start_console).to receive(:rules_command)
+      start_console.run
     end
 
     it 'call rating_command when rating' do
       allow(start_console.output_helper).to receive(:scenario).and_return(I18n.t(:select_scenario_message))
       allow(start_console.input_helper).to receive(:scenario_command).and_return('rating')
-      expect(start_console).to receive(:public_send).with(:rating_command)
-      start_console.game_menu
+      expect(start_console).to receive(:rating_command)
+      start_console.run
     end
 
     it 'call exit_command when exit' do
       allow(start_console.output_helper).to receive(:scenario).and_return(I18n.t(:select_scenario_message))
       allow(start_console.input_helper).to receive(:scenario_command).and_return('exit')
-      expect(start_console).to receive(:public_send).with(:exit_command)
-      start_console.game_menu
+      expect(start_console).to receive(:exit_command)
+      start_console.run
     end
   end
 
@@ -86,7 +88,7 @@ RSpec.describe StartConsole do
       allow(RatingConsole).to receive(:recorded_data).and_return(records)
       allow(start_console.output_helper).to receive(:rating).with(records)
       expect(start_console).to receive(:game_menu)
-      start_console.rating_command
+      start_console.run
     end
   end
 end

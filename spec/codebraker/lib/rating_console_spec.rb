@@ -47,7 +47,7 @@ RSpec.describe RatingConsole do
 
     it 'returns rating records with places' do
       allow(described_class).to receive(:load_data).and_return(prepared_records)
-      expect(described_class.recorded_data(prepared_records)).to eq(sorted_records)
+      expect(described_class.records).to eq(sorted_records)
     end
   end
 end

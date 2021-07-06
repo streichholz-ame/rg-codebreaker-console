@@ -23,7 +23,7 @@ class StartConsole < CodebrakerConsole
   end
 
   def rating_command
-    output_helper.rating(RatingConsole.recorded_data)
+    output_helper.rating(RatingConsole.records)
     game_menu
   end
 end
